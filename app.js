@@ -1,6 +1,6 @@
 let btn = document.querySelector("#btn");
 document.addEventListener("DOMContentLoaded", function(){
-  fetch("http://api.icndb.com/jokes/random/2").then(res=> res.json()).then(data =>  {
+  fetch("https://api.icndb.com/jokes/random/4").then(res=> res.json()).then(data =>  {
     if(data.type == "success"){
       // let datas = data.value.joke;
       
