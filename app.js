@@ -1,10 +1,11 @@
 let btn = document.querySelector("#btn");
 document.addEventListener("DOMContentLoaded", function(){
-  fetch("https://api.icndb.com/jokes/random/4").then(res=> res.json()).then(data =>  {
+
+  fetch("https://api.icndb.com/jokes/random/10").then(res =>res.json()).then(data =>  {
+    console.log(data);
     if(data.type == "success"){
-      // let datas = data.value.joke;
-      
-      data.value.forEach(function(value){ console.log(value.joke); ui.addToUI(value.joke)
+
+      data.value.forEach(function(value){ console.log(value.joke); ui.addToUI("#jumbo","Regular Jokes",value.joke)
       });
 
     }else console.log("something went wrong")
@@ -12,14 +13,14 @@ document.addEventListener("DOMContentLoaded", function(){
   console.log("button has been click");
 });
 
+  // UI OBJECT
 let UI = function(){
-  
-  
+
   this.addToFavourite();
   this.scrollEvent(document.querySelector("nav"), document.querySelector(".navbar-brand"), document.querySelector(".fa-smile-o"));
 }
-
-  UI.prototype.addToUI = function(joke) {
+    // UI Prototype Method > AddToUI
+  UI.prototype.addToUI = function(tag,jokeType,joke) {
     let row = document.createElement("div"),
         emptyCol1 = document.createElement("div"),
         firstCol = document.createElement("div"),
@@ -28,6 +29,7 @@ let UI = function(){
 
         row.className = 'container row';
         emptyCol1.className = "offset-1";
+        // emptyCol1.appendChild(document.createElement("br"));
         firstCol.classList = "card col-sm-5";
         const cardTitle = document.createElement("div"),
               b = document.createElement("b"),
@@ -59,7 +61,7 @@ let UI = function(){
               cardBody2 = document.createElement("div"),
               p2 = document.createElement("p");
               cardTitle2.className = "card-title mb-0 pb-0 text-primary";
-              b2.innerText = "Regular Jokes";
+              b2.innerText = jokeType;
               i2.className = "fa fa-star-o fa fa-pull-right";
               // card title children
               cardTitle2.appendChild(b2);
@@ -74,68 +76,87 @@ let UI = function(){
         scndCol.appendChild(cardBody2);
 
         emptyCol2.className = "offset-1";
+        emptyCol2.appendChild(document.createElement("br"));
         scndCol.className = "card col-sm-5";
         row.appendChild(emptyCol1);
         row.appendChild(firstCol);
+        
         row.appendChild(emptyCol2);
         row.appendChild(scndCol);
         
         
-      document.getElementById("jumbo").appendChild(row);
-      document.getElementById("jumbo").appendChild(document.createElement("br"));
+        document.querySelector(tag).appendChild(row);
+        document.querySelector(tag).appendChild(document.createElement("br"));
         console.log(row);
   }
 
+  // UI Prototype Method > Add To Favourite
  UI.prototype.addToFavourite = function (){
 
-  let cardTitle = document.querySelectorAll('.card-title');
-  cardTitle.forEach(title => {
-    title.addEventListener("click", e => {
+  let getStars = document.querySelectorAll('.get-star');
+  getStars.forEach(getStar => {
+    getStar.addEventListener("click", e => {
       let star = e.target;
       
       if(star.classList.contains("fa-star-o")) {
+        joke = star.parentElement.parentElement.children[1].firstElementChild.innerText;
+        let arr;
+        if(localStorage.getItem('fav') == null){
+          arr = [];
+        }else{
+          arr = JSON.parse(localStorage.getItem('fav'));  
+        }
+        arr.push(joke)
+        localStorage.setItem('fav',JSON.stringify(arr));
+        
         star.className = 'fa fa-star fa fa-pull-right';  
       }else if(star.classList.contains("fa-star")){
-      star.className = 'fa fa-star-o fa fa-pull-right';
+
+        
+        star.className = 'fa fa-star-o fa fa-pull-right';
       }
 
     })
   });
 
  }
- 
+
+    // UI Prototype Method > scrollEvent
  UI.prototype.scrollEvent = function (nav, navBrand, face) {
-  // let winoffset = window.pageYOffset;     
+  function replacer(Elem, New, Old){
+    Elem.classList.replace(New,Old);
+  }
   document.addEventListener('scroll', watch);
   function watch () {
-    let winOffset = window.pageYOffset;
-    
+    let winOffset = window.pageYOffset;  
     if(window.innerWidth > 576){
 
       if(winOffset >= 920) {
-        nav.classList.replace("bg-primary", "bg-dark");
-        navBrand.classList.replace("text-light", "text-primary");
-        face.classList.replace("text-light", "text-primary");
+        replacer(nav, "bg-primary", "bg-dark");
+        replacer(navBrand, "text-light", "text-primary");
+        replacer(face, "text-light", "text-primary");
       }else {
-        nav.classList.replace("bg-dark", "bg-primary");
-        navBrand.classList.replace("text-primary", "text-light");
-        face.classList.replace("text-primary", "text-light");
+        replacer(nav,"bg-dark", "bg-primary");
+        replacer(navBrand, "text-primary", "text-light");
+        replacer(face, "text-primary", "text-light");
+
       }
 
     }else if(window.innerWidth < 576){
     
       if(winOffset >= 1200) {
-        nav.classList.replace("bg-primary", "bg-dark");
-        navBrand.classList.replace("text-light", "text-primary");
-        face.classList.replace("text-light", "text-primary");
+        replacer(nav, "bg-primary", "bg-dark");
+        replacer(navBrand, "text-light", "text-primary");
+        replacer(face, "text-light", "text-primary");
       }else {
-        nav.classList.replace("bg-dark", "bg-primary");
-        navBrand.classList.replace("text-primary", "text-light");
-        face.classList.replace("text-primary", "text-light");
+        replacer(nav,"bg-dark", "bg-primary");
+        replacer(navBrand, "text-primary", "text-light");
+        replacer(face, "text-primary", "text-light");
       }
 
     } 
  }
 }
+
 
 let ui = new UI();
