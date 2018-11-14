@@ -1,17 +1,37 @@
 let btn = document.querySelector("#btn");
+
+function fetchIt(){
+  let val;
+   ui.addToUI("#jumbo","Regular Jokes", val || "Error something went wrong" );
+  
+}
+
+
+
 document.addEventListener("DOMContentLoaded", function(){
+  
+  
+  fetch("https://api.icndb.com/jokes/random/2").then(res => res.json())
+    .then(data =>  {
+    
+      if(data.type == "success"){
 
-  fetch("https://api.icndb.com/jokes/random/10").then(res =>res.json()).then(data =>  {
-    console.log(data);
-    if(data.type == "success"){
+        data.value.forEach(function(value){ console.log(value.joke); ui.addToUI("#jumbo","Regular Jokes",value.joke);
+        // ui.addToUI("#daily-jokes","Jokes Of The Day", value.joke);
+  ui.addToUI("#daily-jokes","Jokes Of The Day", value.joke);
 
-      data.value.forEach(function(value){ console.log(value.joke); ui.addToUI("#jumbo","Regular Jokes",value.joke)
-      });
+        });
 
-    }else console.log("something went wrong")
-  });
-  console.log("button has been click");
-});
+      }else console.log("something went wrong")
+    
+    }).catch( 
+      
+      // fetchIt()
+    );
+
+  console.log("Dom Content Loaded");
+
+})
 
   // UI OBJECT
 let UI = function(){
@@ -38,7 +58,7 @@ let UI = function(){
               cardBody = document.createElement("div"),
               p = document.createElement("p");
               cardTitle.className = "card-title mb-0 pb-0 text-primary";
-              b.innerText = "Regular Jokes";
+              b.innerText = jokeType;
               i.className = "fa fa-star-o fa fa-pull-right";
               // card title children
               cardTitle.appendChild(b);
@@ -87,7 +107,7 @@ let UI = function(){
         
         document.querySelector(tag).appendChild(row);
         document.querySelector(tag).appendChild(document.createElement("br"));
-        console.log(row);
+        // console.log(row);
   }
 
   // UI Prototype Method > Add To Favourite
@@ -126,9 +146,12 @@ let UI = function(){
   function replacer(Elem, New, Old){
     Elem.classList.replace(New,Old);
   }
+
   document.addEventListener('scroll', watch);
   function watch () {
-    let winOffset = window.pageYOffset;  
+    
+    let winOffset = window.pageYOffset;
+    // console.log(winOffset);
     if(window.innerWidth > 576){
 
       if(winOffset >= 920) {
@@ -155,8 +178,9 @@ let UI = function(){
       }
 
     } 
+    
  }
-}
-
+ 
+} 
 
 let ui = new UI();

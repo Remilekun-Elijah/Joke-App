@@ -44,107 +44,22 @@
   </div>
 </div>
 </header>
-<div class="jumbotron get-star">
-
-  <!-- container -->
-  <div class="container ">
-    <!-- bootstrap Grid row  -->
-    <div class="row">
-      <!-- offset 1 column  -->
-      <!-- <div class="offset-1"></div> -->
-      <!-- bootstrap card nd column 5 + offset 1 => 6 column -->
-      <div class="card col-sm-5">
-        <div class="card-title  mb-0 pb-0 text-primary">
-          <b class=""> Jokes of the day</b> <i class="fa fa-star-o fa fa-pull-right" title="Add to favorite"></i>
-          <hr>
-        </div>
-        <div class="card-body ">
-          <p class="lead">
-            Hello world
-          </p>
-        </div>
-      </div>
-      <!-- End of first col card -->
-      <div class="offset-1"><br></div>
-      <!-- bootstrap card nd column 5 + offset 1 => 6 column -->
-      <div class="card col-sm-5 ">
-        <!-- joke of the day and stars  -->
-        <div class="card-title  mb-0 pb-0 text-primary">
-          <!-- joke of the day -->
-          <b class=""> Jokes of the day</b> 
-          <!-- star -->
-          <i class="fa fa-star-o fa fa-pull-right" title="Add to favorite"></i>
-          <hr>
-        </div>
-        <div class="card-body mt-0">
-          <p class="lead">
-            Hello world
-          </p>
-        </div>
-      </div>
-      <!-- End of second col card -->
-    </div>
-    <!-- End of row class-->
-    <br>
-    <!--SECOND bootstrap Grid row  -->
-    <div class="row">
-      <!-- offset 1 column  -->
-      <!-- <div class="offset-1"></div> -->
-      <!-- bootstrap card nd column 5 + offset 1 => 6 column -->
-      <div class="card col-sm-5">
-        <!-- joke of the day and stars  -->
-        <div class="card-title  mb-0 pb-0 text-primary">
-          <!-- jokes of the day -->
-          <b> Jokes of the day</b> 
-          <!-- star -->
-          <i class="fa fa-star-o fa fa-pull-right" title="Add to favorite"></i>
-          <hr>
-        </div>
-        <div class="card-body ">
-          <p class="lead"> 
-            Hello world
-          </p>
-        </div>
-      </div>
-      <!-- End of first col card -->
-
-      <div class="offset-1"><br></div>
-      <!-- bootstrap card nd column 5 + offset 1 => 6 column -->
-      <div class="card col-sm-5 ">
-        <!-- joke of the day and stars  -->
-        <div class="card-title  mb-0 pb-0 text-primary">
-          <!-- joke of the day -->
-          <b class=""> Jokes of the day</b> 
-          <!-- star -->
-          <i class="fa fa-star-o fa fa-pull-right" title="Add to favorite"></i>
-          <hr>
-        </div>
-        <div class="card-body mt-0">
-          <p class="lead">
-            Hello world
-          </p>
-        </div>
-      </div>
-      <!-- End of second col card -->
-    </div>
-    <!-- End of row class-->
-
-    
-  </div>
-  <!-- End Container -->
-</div>
+<div class="jumbotron get-star" id="daily-jokes"></div>
 <!-- End Jumbotron -->
-  <div class="half-way ">
-    <div class="half-way-inner h3 text-center ">
-      <b class="" id="half-way-text" style=" position:relative; top: 5em; color: white;">..More jokes <i class="fa fa-arrow-down"></i></b>
-    </div>
+<div class="half-way ">
+  <div class="half-way-inner h3 text-center ">
+    <b class="" id="half-way-text" style=" position:relative; top: 5em; color: white;">..More jokes <i class="fa fa-arrow-down"></i></b>
   </div>
+</div>
+ <!--  jumbotron-->
+<div class="jumbotron">
+  <div class=" get-star" id='jumbo'></div>
+  <hr>
+  <div class="ml-5 pl-5">
+  <button class="btn btn-primary " id='btn2'> LOAD MORE</button>
+</div>
+</div>
 
-
-
-
-    <!--  jumbotron-->
-<div class="jumbotron get-star" id='jumbo'></div>
 
   <footer class=" pt-3 text-center bg-dark">
 
@@ -203,5 +118,24 @@
 <script src='library/bootstrap-4.min.js'></script>
 <script src='library/popper.min.js'></script> -->
 <script src="app.js"></script>
+<script>
+  document.getElementById("btn2").addEventListener("click", ()=> {
+  fetch("https://api.icndb.com/jokes/random/2").then(res => res.json())
+    .then(data =>  {
+    
+      if(data.type == "success"){
+
+        data.value.forEach(function(value){ console.log(value.joke); ui.addToUI("#jumbo","Regular Jokes",value.joke)
+        });
+
+      }else console.log("something went wrong")
+    
+    }).catch( 
+      
+    //   fetchIt()
+    );
+})
+
+</script>
 </body>
 </html>
