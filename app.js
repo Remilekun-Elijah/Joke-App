@@ -1,186 +1,217 @@
-let btn = document.querySelector("#btn");
+let outerJumbo = document.querySelector("#outer-jumbo"),
+  btn = document.getElementById("bars")
+i = document.querySelector("#fa-bars");
 
-function fetchIt(){
-  let val;
-   ui.addToUI("#jumbo","Regular Jokes", val || "Error something went wrong" );
-  
+
+/****   FOR FAVOURITES PAGE *****/
+function getJokesFromLS() {
+  let ui = new UI();
+  jokes = JSON.parse(localStorage.getItem("fav"));
+  jokes.forEach(joke => {
+    ui.addToUI("#fav", "Favourite Jokes", joke, "fa fa-star fa fa-pull-right");
+    console.log(joke);
+  })
 }
 
 
 
-document.addEventListener("DOMContentLoaded", function(){
-  
-  
-  fetch("https://api.icndb.com/jokes/random/2").then(res => res.json())
-    .then(data =>  {
-    
-      if(data.type == "success"){
+document.addEventListener("DOMContentLoaded", function () {
 
-        data.value.forEach(function(value){ console.log(value.joke); ui.addToUI("#jumbo","Regular Jokes",value.joke);
-        // ui.addToUI("#daily-jokes","Jokes Of The Day", value.joke);
-  ui.addToUI("#daily-jokes","Jokes Of The Day", value.joke);
-
-        });
-
-      }else console.log("something went wrong")
-    
-    }).catch( 
-      
-      // fetchIt()
-    );
-
+  // getJokesFromLS();
   console.log("Dom Content Loaded");
 
 })
 
-  // UI OBJECT
-let UI = function(){
+
+// UI OBJECT
+let UI = function () {
 
   this.addToFavourite();
   this.scrollEvent(document.querySelector("nav"), document.querySelector(".navbar-brand"), document.querySelector(".fa-smile-o"));
 }
-    // UI Prototype Method > AddToUI
-  UI.prototype.addToUI = function(tag,jokeType,joke) {
-    let row = document.createElement("div"),
-        emptyCol1 = document.createElement("div"),
-        firstCol = document.createElement("div"),
-        emptyCol2 = document.createElement("div")
-        scndCol = document.createElement("div");
+// UI Prototype Method > AddToUI = create all the html cards to insert the jokes
+UI.prototype.addToUI = function (tag, jokeType, joke, icon, CardTitleClass, colClass) {
+  /**** COL DIV ****/
+  const col = document.createElement("div");
+  col.classList = colClass || "col-xl-3 col-lg-4 col-md-5 col-sm-11 col-xs-11 mb-5 mx-auto card-deck col";
 
-        row.className = 'container row';
-        emptyCol1.className = "offset-1";
-        // emptyCol1.appendChild(document.createElement("br"));
-        firstCol.classList = "card col-sm-5";
-        const cardTitle = document.createElement("div"),
-              b = document.createElement("b"),
-              i = document.createElement("i"),
-              hr = document.createElement("hr"),
-              cardBody = document.createElement("div"),
-              p = document.createElement("p");
-              cardTitle.className = "card-title mb-0 pb-0 text-primary";
-              b.innerText = jokeType;
-              i.className = "fa fa-star-o fa fa-pull-right";
-              // card title children
-              cardTitle.appendChild(b);
-              cardTitle.appendChild(i);
-              cardTitle.appendChild(hr);
-              // card body children
-              cardBody.className = "card-body";
-              p.className = 'lead';
-              p.appendChild(document.createTextNode(joke));
-              cardBody.appendChild(p);
-        // first card # main card
-        firstCol.appendChild(cardTitle)
-        firstCol.appendChild(cardBody);
+  /**** MAIN CARD DIV***/
+  const card = document.createElement("div");
+  card.classList = "card";
+  const cardTitle = document.createElement("div"),
+    b = document.createElement("b"),
+    i = document.createElement("i"),
+    hr = document.createElement("hr"),
+    cardBody = document.createElement("div"),
+    p = document.createElement("p");
 
-        // second card
-        const cardTitle2 = document.createElement("div"),
-              b2 = document.createElement("b"),
-              i2 = document.createElement("i"),
-              hr2 = document.createElement("hr"),
-              cardBody2 = document.createElement("div"),
-              p2 = document.createElement("p");
-              cardTitle2.className = "card-title mb-0 pb-0 text-primary";
-              b2.innerText = jokeType;
-              i2.className = "fa fa-star-o fa fa-pull-right";
-              // card title children
-              cardTitle2.appendChild(b2);
-              cardTitle2.appendChild(i2);
-              cardTitle2.appendChild(hr2);
-              // card body children
-              cardBody2.className = "card-body";
-              p2.className = 'lead';
-              p2.appendChild(document.createTextNode(joke));
-              cardBody2.appendChild(p2);
-        scndCol.appendChild(cardTitle2);
-        scndCol.appendChild(cardBody2);
+  /**** CARD TITLE ****/
+  cardTitle.className = CardTitleClass || "card-title mb-0 pb-0 pt-2 px-2 text-primary";
+  b.innerText = jokeType || "Regular Jokes";
+  i.className = icon || "fa fa-star-o fa fa-pull-right";
+  /**** insert children in CARD TITLE ****/
+  cardTitle.appendChild(b);
+  cardTitle.appendChild(i);
+  cardTitle.appendChild(hr);
 
-        emptyCol2.className = "offset-1";
-        emptyCol2.appendChild(document.createElement("br"));
-        scndCol.className = "card col-sm-5";
-        row.appendChild(emptyCol1);
-        row.appendChild(firstCol);
-        
-        row.appendChild(emptyCol2);
-        row.appendChild(scndCol);
-        
-        
-        document.querySelector(tag).appendChild(row);
-        document.querySelector(tag).appendChild(document.createElement("br"));
-        // console.log(row);
-  }
+  /**** CARD BODY ****/
+  cardBody.className = "card-body";
+  p.className = 'lead';
+  p.innerHTML += joke;
+  /**** insert child in CARD BODY ****/
+  cardBody.appendChild(p);
 
-  // UI Prototype Method > Add To Favourite
- UI.prototype.addToFavourite = function (){
+  /**** Add CARD TITLE and CARD BODY to main card div****/
+  card.appendChild(cardTitle);
+  card.appendChild(cardBody);
 
+  /**** Add main card to COL DIV****/
+  col.appendChild(card);
+
+  /**** Add col div to our ROW DIV that is already in the UI > html pages ****/
+  document.querySelector(tag).appendChild(col);
+  document.querySelector(tag).appendChild(document.createElement("br"));
+
+}
+
+// UI Prototype Method > Add To Favourite = add favorites to user local storage
+UI.prototype.addToFavourite = function () {
+
+  /**** Grab all star icons and loop through em ***/
   let getStars = document.querySelectorAll('.get-star');
   getStars.forEach(getStar => {
+    /*** add a click event on all the star icons ***/
     getStar.addEventListener("click", e => {
       let star = e.target;
-      
-      if(star.classList.contains("fa-star-o")) {
+      /*** NOT FILLED:: Check if STAR ICON is clicked and filled then add the jokes to local storage***/
+      if (star.classList.contains("fa-star-o")) {
         joke = star.parentElement.parentElement.children[1].firstElementChild.innerText;
         let arr;
-        if(localStorage.getItem('fav') == null){
+        if (localStorage.getItem('fav') == null) {
           arr = [];
-        }else{
-          arr = JSON.parse(localStorage.getItem('fav'));  
+        } else {
+          arr = JSON.parse(localStorage.getItem('fav'));
         }
         arr.push(joke)
-        localStorage.setItem('fav',JSON.stringify(arr));
-        
-        star.className = 'fa fa-star fa fa-pull-right';  
-      }else if(star.classList.contains("fa-star")){
-
-        
+        localStorage.setItem('fav', JSON.stringify(arr));
+        star.className = 'fa fa-star fa fa-pull-right';
+      }
+      /*** FILLED:: if STAR ICON is not filled and it's clicked fill it***/
+      else if (star.classList.contains("fa-star")) {
         star.className = 'fa fa-star-o fa fa-pull-right';
       }
 
     })
   });
 
- }
+};
 
-    // UI Prototype Method > scrollEvent
- UI.prototype.scrollEvent = function (nav, navBrand, face) {
-  function replacer(Elem, New, Old){
-    Elem.classList.replace(New,Old);
-  }
+// UI prototype > fetchJokes = fetch the jokes from the API
+UI.prototype.fetchJokes = (numberOfJokes, elem, jokeType) => {
+
+  // this.numOfJokes = numOfJokes;
+  fetch(`https://api.icndb.com/jokes/random/${numberOfJokes}`).then(res => {
+      if (res && res.status === 200) return res.json();
+
+      else {
+        ui.addToUI(elem, "Error 404!", "We know this ain't funny but something went wrong :)", "fa fa-warning fa fa-pull-right", "card-title mb-0 pb-0 pt-2 px-2 text-warning", "col-8 mx-auto");
+        // ui.addToUI(elem, "Error 404!", "We know this ain't funny but something went wrong :)", "fa fa-warning fa fa-pull-right", "card-title mb-0 pb-0 pt-2 px-2 text-warning", "col-8 mx-auto");
+
+      };
+    })
+    .then(data => {
+      if (data.type == "success") {
+
+        data.value.forEach(value => {
+          joke = value.joke;
+          console.log(`big joke is ${joke}`);
+          ui.addToUI(elem, jokeType, joke);
+          //  return callBack;
+
+        });
+
+      } else console.log("something went wrong");
+    });
+}
+// End fetch prototype
+
+// UI Prototype Method > scrollEvent = change the background color of the navbar and navbar-brands color
+UI.prototype.scrollEvent = function (nav, navBrand, face) {
+
+  function replacer(Elem, New, Old) {
+    Elem.classList.replace(New, Old);
+  };
 
   document.addEventListener('scroll', watch);
-  function watch () {
-    
+
+  function watch() {
+    //  ******* Floating element class below > CHECK LINE 1 to 20 *****//
+    if (btn){
+      btn.classList = '';
+      btn.innerHTML = `
+      <i class='fa fa-bars text-primary rounded-circle bg-white p-3 stay' id="fa-bars"></i>
+      `;
+    } else {
+      console.error("")
+    }
+    //  ******* Floating element class above > CHECK LINE 1 to 20 *****//
+
     let winOffset = window.pageYOffset;
     // console.log(winOffset);
-    if(window.innerWidth > 576){
+    if (window.innerWidth > 576) {
 
-      if(winOffset >= 920) {
+      if (winOffset >= 920) {
         replacer(nav, "bg-primary", "bg-dark");
         replacer(navBrand, "text-light", "text-primary");
         replacer(face, "text-light", "text-primary");
-      }else {
-        replacer(nav,"bg-dark", "bg-primary");
+      } else {
+        replacer(nav, "bg-dark", "bg-primary");
         replacer(navBrand, "text-primary", "text-light");
-        replacer(face, "text-primary", "text-light");
-
+        replacer(face, "text-primary", "text-light")
       }
 
-    }else if(window.innerWidth < 576){
-    
-      if(winOffset >= 1200) {
+    } else if (window.innerWidth < 576) {
+
+      if (winOffset >= 1200) {
         replacer(nav, "bg-primary", "bg-dark");
         replacer(navBrand, "text-light", "text-primary");
         replacer(face, "text-light", "text-primary");
-      }else {
-        replacer(nav,"bg-dark", "bg-primary");
+      } else {
+        replacer(nav, "bg-dark", "bg-primary");
         replacer(navBrand, "text-primary", "text-light");
         replacer(face, "text-primary", "text-light");
       }
 
-    } 
-    
- }
- 
-} 
+    }
 
-let ui = new UI();
+  };
+
+};
+
+(function () {
+
+  $('.row').on("click", e => {
+    if (e.target.classList.contains('fa-star')) {
+      let p = e.target.parentElement.parentElement.children[1].firstElementChild;
+      let arr;
+      if (localStorage.getItem("fav") == null) {
+        arr = []
+      } else {
+        arr = JSON.parse(localStorage.getItem("fav"));
+      }
+
+
+      arr.forEach((fav, index) => {
+        if (p.textContent == fav) {
+          p.parentElement.parentElement.remove();
+          console.log(fav + ' ' + index);
+          arr.splice(index, 1)
+        }
+      });
+      // arr.push(p.textContent);
+      localStorage.setItem("fav", JSON.stringify(arr));
+    }
+
+  });
+  
+})();
