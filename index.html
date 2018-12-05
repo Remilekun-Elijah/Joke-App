@@ -164,7 +164,7 @@ btn.innerHTML = `
 <i class='fa fa-power-off text-danger mr-5 mt-2 iTag2 pull-right'></i>
 `
 } else if (e.target.classList.contains("fa-refresh")) {
-ui.addToUI("#regular-jokes", "Regular Jokes", "Error something went wrong");
+ui.fetchJokes(8, "#regular-jokes", "Regular Jokes");
 } else {}
 
 }
