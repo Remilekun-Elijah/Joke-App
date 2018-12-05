@@ -1,7 +1,7 @@
 li a{
       font-size: 25px;
       color: whitesmoke !important;
-      
+
     }
     #home{
       min-height: 500px;
@@ -55,7 +55,7 @@ li a{
       cursor: pointer;
     }
     .half-way{
-      
+
       /* opacity: .7; */
       background: url(img/img-2.jpg) no-repeat center;
 
@@ -82,9 +82,9 @@ li a{
       transition: all .7s;
     }
 
-    /*****  ****/
+    /***** Little round button  ****/
     #fa-bars{
-      
+
     }
     .stay, #bars{
       position: fixed;
@@ -98,7 +98,7 @@ li a{
     }
 
     .stay:hover{
-      
+
       transform: scale(1.1);
       transition: all .5s;
     }
@@ -112,7 +112,7 @@ li a{
       width: 100%;
 
     }
-    
+
     .iTag, .iTag2{
       border-radius: unset !important;
       font-size: 20px;
@@ -127,7 +127,7 @@ li a{
 
 
     @media (max-width: 575px) {
-      
+
       .col-xs-11{
 
         -webkit-box-flex:0;

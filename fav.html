@@ -7,7 +7,7 @@
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <meta name="theme-color" content="#007bff">
         <link rel="shortcut icon" href="img/img-2.jpg">
-        <title>Joke App</title>
+        <title>Favourite Jokes</title>
         <link href='library/bootstrap-4.min.css' type="text/css" rel="stylesheet">
         <!-- font awesome -->
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -17,15 +17,15 @@
     </head>
 
     <body>
-        <nav class="navbar navbar-expand-sm bg-primary navbar-dark fixed-top">
+        <nav class="navbar  bg-primary navbar-dark fixed-top">
             <div class="container">
                 <a href="#" class=" navbar-brand text-light"> <i class="fa fa-smile-o text-light" style='font-size: 30px;'></i>
                     JOKES</a>
-                <button class="navbar-toggler" data-toggle="collapse" data-target="#navbar">
+                <!-- <button class="navbar-toggler" data-toggle="collapse" data-target="#navbar">
                     <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbar">
-                    <ul class="nav navbar-nav ml-auto">
+                </button> -->
+                <div class="">
+                    <ul class="nav  ml-auto">
                         <li class="nav-item">
                             <a href="index.html" class="nav-link"><i class="fa fa-home"></i></a>
                         </li>
@@ -50,54 +50,36 @@
                 </div>
             </div>
         </header>
-        <div class="jumbotron get-star">
+        <div class="jumbotron get-star mb-0">
             <div class="row" id="fav"></div>
             <div class='mt-5 text-light mx-auto text-center'>
-                <a href="index.html" class="btn btn-block btn-secondary">See more jokes</a>
+                <a href="index.html" class="btn btn-block btn-primary">See more jokes</a>
             </div>
         </div>
 
+        <footer class=" pt-3 mt-0 text-center bg-dark" style="overflow-x:hidden">
+            <div class="row">
+                <div class="col-sm-6">
 
-        <footer class=" pt-3 text-center bg-dark">
+                    <p class="text-light"> Coded with <i class="fa fa-html5"></i> and <i class="fa fa-coffee"></i>
+                        by
+                        <a href="github.com/Remilekun-Elijah" class="">Remilekun Elijah.</a>
+                    </p>
 
-            <div class="container ">
-                <div class="row ">
-                    <div class="col-sm-6">
-                        <div class="container mt-5">
-                            <p class="text-light"> Coded with <i class="fa fa-html5"></i> and <i class="fa fa-coffee"></i>
-                                by <a href="github.com/Remilekun-Elijah" class="text-center">Remilekun Elijah.</a></p>
-                        </div>
-                        <nav style="font-size: 30px" class="mt-1">
-                            <a href="facebook.com/remilekun.elijah.jnr.97" class=" "><i class="fa fa-facebook-square "></i></a>
-                            <a href="twitterk.com/RemilekunElijah" class=" "><i class="fa fa-twitter-square "></i></a>
-                            <a href="instagram.com/Remilekun-Elijah-jnr" class=" "><i class="fa fa-instagram "></i></a>
-                            <a href="linkedin.com/Remilekun-Elijah" class=" "><i class="fa fa-linkedin-square "></i></a>
-                            <a href="github.com/Remilekun-Elijah" class=" "><i class="fa fa-github-square"></i></a>
-                            <a href="pinterest.com/remilekun.elijah.jnr.97" class=" "><i class="fa fa-pinterest-square "></i></a>
-                            <a href="google.com/Remilekun%20Elijah" class=" "><i class="fa fa-google-plus-square "></i></a>
-                            <a href="flickr.com/remilekun%20elijah" class=" "><i class="fa fa-flickr "></i></a>
-                        </nav>
-                    </div>
-
-                    <div class="col-sm-6">
-                        <h3 class="text-light pb-0">
-                            <i class="fa fa-address-book-o text-light"></i> Contact
-                        </h3>
-                        <hr style="margin: 0px 170px; " class="pb-3">
-                        <div style="color:#aba">
-                            <p class=" pl-3">
-                                <i class="fa fa-address-card"></i> No <sup>106</sup> Ajose Adeogun VI, Lagos NG
-                            </p>
-                            <p class="">
-                                <i class="fa fa-envelope-o mb-4"></i> Remilekuneiljah21997@gmail.com
-                            </p>
-
-                            <p class="phone">
-                                <i class="fa fa-phone col-lg-offset-2"></i> 0903251166
-                            </p>
-                        </div>
-                    </div>
                 </div>
+                <div class="col-sm-6">
+                    <nav class="font-weight-bold mt-1 pb-2 mb-0 h3">
+                        <a href="https://facebook.com/remilekun.jnr" class=" "><i class="fa fa-facebook-square "></i></a>
+                        <a href="https://twitter.com/RemilekunElijah" class=" "><i class="fa fa-twitter-square "></i></a>
+                        <a href="https://instagram.com/Remilekun_Elijah_jnr" class=" "><i class="fa fa-instagram "></i></a>
+                        <a href="https://linkedin.com/remilekun-elijah-8b5710160" class=" "><i class="fa fa-linkedin-square "></i></a>
+                        <a href="https://github.com/Remilekun-Elijah" class=" "><i class="fa fa-github-square"></i></a>
+
+                        <a href="https://plus.google.com/108341172364313337187" class=" "><i class="fa fa-google-plus-square "></i></a>
+                        <a href="https://flickr.com/remilekun%20elijah" class=" "><i class="fa fa-flickr "></i></a>
+                    </nav>
+                </div>
+
 
 
             </div>
@@ -120,11 +102,6 @@
 <script src='library/popper.min.js'></script> -->
         <script src="app.js"></script>
         <script>
-            // function getJokesFromLS (){
-            //     let ui = new UI();
-            //     jokes = JSON.parse(localStorage.getItem("fav"));
-            //     jokes.forEach(joke=> ui.addToUI("#fav", "Funny Jokes",joke))
-            // }
             document.addEventListener("DOMContentLoaded", getJokesFromLS);
         </script>
     </body>
