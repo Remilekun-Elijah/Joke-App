@@ -208,10 +208,20 @@ UI.prototype.scrollEvent = function (nav, navBrand, face) {
           arr.splice(index, 1)
         }
       });
-      // arr.push(p.textContent);
+
       localStorage.setItem("fav", JSON.stringify(arr));
     }
 
   });
-  
+
+
+
+  let p = e.target.parentElement.parentElement.children[1].firstElementChild;
+  let arr;
+  if (localStorage.getItem("fav") == null) {
+    arr = []
+  } else {
+    arr = JSON.parse(localStorage.getItem("fav"));
+  }
+
 })();
