@@ -130,31 +130,6 @@
             ui.fetchJokes(4, "#daily-jokes", "Daily Jokes");
             ui.fetchJokes(8, "#regular-jokes", "Regular Jokes");
 
-            /**** FLOATING ICON > For refreshing of jokes *****/
-            document.onclick = e => {
-                if (i.className.includes("fa-refresh")) {
-                    btn.classList = '';
-                    btn.innerHTML =
-                        `
-<i class='fa fa-bars text-primary rounded-circle bg-white p-3 stay' id="fa-bars"></i>
-`;
-
-                }
-
-                if (e.target.classList.contains("stay")) {
-
-                    btn.classList = "bg-primary change fixed-bottom";
-                    btn.innerHTML =
-                        `
-    <i class='fa fa-refresh text-dark ml-5 mt-2 iTag pull-left' id="fa-bars"></i>
-    <i class='fa fa-power-off text-danger mr-5 mt-2 iTag2 pull-right'></i>
-    `
-                } else if (e.target.classList.contains("fa-refresh")) {
-                    ui.fetchJokes(8, "#regular-jokes", "Regular Jokes");
-                } else {}
-
-            }
-            /****** ENDS *****/
             (function () {
                 window.onscroll = () => {
                     console.log("document-Element-ScrollHeight: " + document.documentElement.scrollHeight);
@@ -165,11 +140,10 @@
                 }
 
                 document.getElementById("load-more").addEventListener("click", () => {
-                    ui.addToUI("#daily-jokes", "Daily Jokes", "Error something went wrong");
-                    ui.addToUI("#regular-jokes", "Daily Jokes", "Error something went wrong");
+                    ui.fetchJokes(8, "#regular-jokes", "Regular Jokes");
 
                 });
-                // if(window.pageYOffset === ){}
+                
 
             })();
         </script>

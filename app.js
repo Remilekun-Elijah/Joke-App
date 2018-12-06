@@ -2,8 +2,41 @@ let outerJumbo = document.querySelector("#outer-jumbo"),
   btn = document.getElementById("bars")
 i = document.querySelector("#fa-bars");
 
+if (btn) {
+  /**** FLOATING ICON > For refreshing of jokes *****/
+  document.onclick = e => {
+    if (i.className.includes("fa-refresh")) {
+      btn.classList = '';
+      btn.innerHTML =
+        `
+        <i class='fa fa-bars text-primary rounded-circle bg-white p-3 stay' id="fa-bars"></i>
+        `;
+
+    }
+
+    if (e.target.classList.contains("stay")) {
+
+      btn.classList = "bg-primary change fixed-bottom";
+      btn.innerHTML =
+        `
+        <i class='fa fa-refresh text-dark ml-5 mt-2 iTag pull-left'
+        id="fa-bars"
+        title="Reload?"> </i>
+        <i class='fa fa-power-off text-danger mr-5 mt-2 iTag2 pull-right' title="Close Application?"></i>
+        `
+    } else if (e.target.classList.contains("fa-refresh")) {
+      window.location.reload();
+    } else if (e.target.classList.contains("fa-power-off")) {
+      window.close();
+    }
+
+  }
+
+} /****** END OF FLOATING BUTTON*****/
 
 /****   FOR FAVOURITES PAGE *****/
+
+
 function getJokesFromLS() {
   let ui = new UI();
   jokes = JSON.parse(localStorage.getItem("fav"));
@@ -15,12 +48,12 @@ function getJokesFromLS() {
 
 
 
-document.addEventListener("DOMContentLoaded", function () {
+// document.addEventListener("DOMContentLoaded", function () {
 
-  // getJokesFromLS();
-  console.log("Dom Content Loaded");
+//   // getJokesFromLS();
+//   console.log("Dom Content Loaded");
 
-})
+// })
 
 
 // UI OBJECT
@@ -146,13 +179,13 @@ UI.prototype.scrollEvent = function (nav, navBrand, face) {
 
   function watch() {
     //  ******* Floating element class below > CHECK LINE 1 to 20 *****//
-    if (btn){
+    if (btn) {
       btn.classList = '';
       btn.innerHTML = `
       <i class='fa fa-bars text-primary rounded-circle bg-white p-3 stay' id="fa-bars"></i>
       `;
     } else {
-      console.error("")
+      // console.error("")
     }
     //  ******* Floating element class above > CHECK LINE 1 to 20 *****//
 
@@ -216,12 +249,5 @@ UI.prototype.scrollEvent = function (nav, navBrand, face) {
 
 
 
-  let p = e.target.parentElement.parentElement.children[1].firstElementChild;
-  let arr;
-  if (localStorage.getItem("fav") == null) {
-    arr = []
-  } else {
-    arr = JSON.parse(localStorage.getItem("fav"));
-  }
 
 })();
