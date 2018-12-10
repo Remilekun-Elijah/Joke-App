@@ -1,3 +1,7 @@
+function replacer(Elem, New, Old) {
+  Elem.classList.replace(New, Old);
+};
+
 let outerJumbo = document.querySelector("#outer-jumbo"),
   btn = document.getElementById("bars")
 i = document.querySelector("#fa-bars");
@@ -39,22 +43,18 @@ if (btn) {
 
 function getJokesFromLS() {
   let ui = new UI();
+
   jokes = JSON.parse(localStorage.getItem("fav"));
-  jokes.forEach(joke => {
+  jokes.forEach((joke, index) => {
     ui.addToUI("#fav", "Favourite Jokes", joke, "fa fa-star fa fa-pull-right");
-    console.log(joke);
+    let num = index >= 0 ? index + 1 : index;
+    $('sup').text(num);
+
+
   })
+
+
 }
-
-
-
-// document.addEventListener("DOMContentLoaded", function () {
-
-//   // getJokesFromLS();
-//   console.log("Dom Content Loaded");
-
-// })
-
 
 // UI OBJECT
 let UI = function () {
@@ -89,7 +89,8 @@ UI.prototype.addToUI = function (tag, jokeType, joke, icon, CardTitleClass, colC
 
   /**** CARD BODY ****/
   cardBody.className = "card-body";
-  p.className = 'lead';
+  p.className = 'lead text-muted';
+  p.id = "joke-text";
   p.innerHTML += joke;
   /**** insert child in CARD BODY ****/
   cardBody.appendChild(p);
@@ -103,7 +104,7 @@ UI.prototype.addToUI = function (tag, jokeType, joke, icon, CardTitleClass, colC
 
   /**** Add col div to our ROW DIV that is already in the UI > html pages ****/
   document.querySelector(tag).appendChild(col);
-  document.querySelector(tag).appendChild(document.createElement("br"));
+  // document.querySelector(tag).appendChild(document.createElement("br"));
 
 }
 
@@ -115,6 +116,7 @@ UI.prototype.addToFavourite = function () {
   getStars.forEach(getStar => {
     /*** add a click event on all the star icons ***/
     getStar.addEventListener("click", e => {
+
       let star = e.target;
       /*** NOT FILLED:: Check if STAR ICON is clicked and filled then add the jokes to local storage***/
       if (star.classList.contains("fa-star-o")) {
@@ -125,9 +127,15 @@ UI.prototype.addToFavourite = function () {
         } else {
           arr = JSON.parse(localStorage.getItem('fav'));
         }
-        arr.push(joke)
+
+        arr.push(joke);
         localStorage.setItem('fav', JSON.stringify(arr));
         star.className = 'fa fa-star fa fa-pull-right';
+
+        /**** line 260 ****/
+        let sup = $("sup").text();
+        $("sup").text(Number(sup) + 1);
+
       }
       /*** FILLED:: if STAR ICON is not filled and it's clicked fill it***/
       else if (star.classList.contains("fa-star")) {
@@ -148,8 +156,6 @@ UI.prototype.fetchJokes = (numberOfJokes, elem, jokeType) => {
 
       else {
         ui.addToUI(elem, "Error 404!", "We know this ain't funny but something went wrong :)", "fa fa-warning fa fa-pull-right", "card-title mb-0 pb-0 pt-2 px-2 text-warning", "col-8 mx-auto");
-        // ui.addToUI(elem, "Error 404!", "We know this ain't funny but something went wrong :)", "fa fa-warning fa fa-pull-right", "card-title mb-0 pb-0 pt-2 px-2 text-warning", "col-8 mx-auto");
-
       };
     })
     .then(data => {
@@ -171,9 +177,7 @@ UI.prototype.fetchJokes = (numberOfJokes, elem, jokeType) => {
 // UI Prototype Method > scrollEvent = change the background color of the navbar and navbar-brands color
 UI.prototype.scrollEvent = function (nav, navBrand, face) {
 
-  function replacer(Elem, New, Old) {
-    Elem.classList.replace(New, Old);
-  };
+
 
   document.addEventListener('scroll', watch);
 
@@ -188,7 +192,6 @@ UI.prototype.scrollEvent = function (nav, navBrand, face) {
       // console.error("")
     }
     //  ******* Floating element class above > CHECK LINE 1 to 20 *****//
-
     let winOffset = window.pageYOffset;
     // console.log(winOffset);
     if (window.innerWidth > 576) {
@@ -223,7 +226,7 @@ UI.prototype.scrollEvent = function (nav, navBrand, face) {
 
 (function () {
 
-  $('.row').on("click", e => {
+  $('#fav').on("click", e => {
     if (e.target.classList.contains('fa-star')) {
       let p = e.target.parentElement.parentElement.children[1].firstElementChild;
       let arr;
@@ -238,8 +241,14 @@ UI.prototype.scrollEvent = function (nav, navBrand, face) {
         if (p.textContent == fav) {
           p.parentElement.parentElement.remove();
           console.log(fav + ' ' + index);
-          arr.splice(index, 1)
+          arr.splice(index, 1);
+
+          let numOfJokes = $('sup').text();
+          $("sup").text(Number(numOfJokes) - 1);
+
+
         }
+
       });
 
       localStorage.setItem("fav", JSON.stringify(arr));
@@ -248,6 +257,67 @@ UI.prototype.scrollEvent = function (nav, navBrand, face) {
   });
 
 
+  /***** Home Page*****/
+  let favChecker = function (elem) {
+    var paragraph = document.querySelectorAll("#joke-text");
+    paragraph.forEach(p => {
+      let star = p.parentElement.parentElement.firstElementChild.children[1];
+      ar = JSON.parse(localStorage.getItem("fav"));
+      ar.forEach((fav, index) => {
+        if (p.textContent === fav) {
+          replacer(star, "fa-star-o", "fa-star");
 
+        }
+        $("sup").text(index + 1);
+      });
+    });
+
+    $(`${elem}`).on("click", e => {
+      if (e.target.classList.contains('fa-star')) {
+        let p = e.target.parentElement.parentElement.children[1].firstElementChild,
+          arr;
+        if (localStorage.getItem("fav") == null) {
+          arr = [];
+        } else {
+          arr = JSON.parse(localStorage.getItem("fav"));
+        }
+
+
+        arr.forEach((fav, index) => {
+          if (p.textContent == fav) {
+            console.log(fav + ' ' + index);
+            arr.splice(index, 1);
+
+            let numOfJokes = $('sup').text();
+            $("sup").text(Number(numOfJokes) - 1);
+          }
+
+        });
+
+        localStorage.setItem("fav", JSON.stringify(arr));
+      }
+
+    });
+
+  };
+  document.addEventListener("DOMContentLoaded", () => {
+    favChecker('#regular-jokes');
+    favChecker('#daily-jokes');
+  });
 
 })();
+$('#get-started').on("click", (e) => {
+
+  if (this.hash !== '') {
+    // alert("hello");
+
+    const hash = e.target.parentElement.hash;
+    $('html, body').animate({
+      scrollTop: $(hash).offset().top
+    }, 600, function () {
+      window.location.hash = hash
+    })
+    console.log();
+    e.preventDefault();
+  }
+});

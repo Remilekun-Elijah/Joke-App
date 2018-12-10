@@ -16,22 +16,24 @@
         <link rel="stylesheet" href="style.css">
     </head>
 
-    <body>
+    <body id="home">
         <nav class="navbar bg-primary navbar-dark fixed-top">
             <div class="container">
-                <a href="#" class=" navbar-brand text-light mr-0 font-weight-bold" style='font-size: 100%;'> <i class="fa fa-smile-o text-light"
-                        style='font-size: 25px;'></i>
-                    JOKES</a>
-                <!-- <button class="navbar-toggler" data-toggle="collapse" data-target="#navbar">
-                    <span class="navbar-toggler-icon"></span>
-                </button> -->
-                <div class="ml-0 pl-0" id="">
+                <a href="index.html" class=" navbar-brand text-light mr-0 font-weight-bold" style='font-size: 100%;'>
+                    <i class="fa fa-smile-o text-light" style='font-size: 25px;'></i> JOKES</a>
+
+                <div class="ml-0 pl-0">
                     <ul class="nav ml-0 pl-0">
                         <li class="nav-item ml-0 pl-0">
                             <a href="index.html" class="nav-link"><i class="fa fa-home"></i></a>
                         </li>
                         <li class="nav-item">
-                            <a href="fav.html" class="nav-link"><i class="fa fa-save"></i></a>
+                            <a href="fav.html" class="nav-link">
+                                <i class="fa fa-save">
+                                    <sup class=' text-white bg-danger border rounded-circle border-danger px-1 py-1'
+                                        style="display:relative;right:10px">0</sup>
+                                </i>
+                            </a>
                         </li>
                         <li class="nav-item">
                             <a href="#" class="nav-link"><i class="fa fa-plus-square"></i></a>
@@ -46,17 +48,17 @@
                 <div class="container home-inner">
                     <i class="fa fa-quote-left"></i> Some Jokes are expensive, but guess what... <br>
                     These ones are completely free! <i class="fa fa-quote-right"></i> <br><br>
-                    <button class="btn btn-outline-primary pr-4 pl-4" id='btn'> Get Started</button>
+                    <a href="#get-star" id='get-started'><button class="btn btn-outline-primary pr-4 pl-4"> Get Started</button></a>
                 </div>
             </div>
         </header>
-        <div class="jumbotron mb-0 get-star">
+        <div class="jumbotron mb-0 get-star" id="get-star">
             <div class="row" id="daily-jokes"></div>
         </div>
         <!-- End Jumbotron -->
 
         <!-- second image text > Regular Jokes Part-->
-        <div class="half-way">
+        <div class="half-way" id="targ">
             <div class="half-way-inner h3 text-center ">
                 <b class="" id="half-way-text" style=" position:relative; top: 5em; color: white;">..More jokes <i
                         class="fa fa-arrow-down"></i></b>
@@ -75,9 +77,8 @@
                 <button class="btn btn-primary" id='load-more'> LOAD MORE</button>
             </div>
 
-            <!-- <div id='barsDiv' class="bg-dark"> -->
             <span class='mt-5' id='bars'><i class='fa fa-bars  text-primary rounded-circle bg-white p-3 stay' id="fa-bars"></i></span>
-            <!-- </div> -->
+
         </div>
         <footer class="containe pt-3 text-center bg-dark" style="overflow-x:hidden">
 
@@ -113,7 +114,9 @@
         </footer>
         <!-- Optional JavaScript -->
         <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        <!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script> -->
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
             crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.12/handlebars.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
@@ -131,19 +134,26 @@
             ui.fetchJokes(8, "#regular-jokes", "Regular Jokes");
 
             (function () {
-                window.onscroll = () => {
-                    console.log("document-Element-ScrollHeight: " + document.documentElement.scrollHeight);
-                    console.log("window-pageYOffset: " + window.pageYOffset);
+                // window.onscroll = () => {
+                //     console.log("document-Element-ScrollHeight: " + document.documentElement.scrollHeight);
+                //     console.log("window-pageYOffset: " + window.pageYOffset);
 
-                    console.log("Document scrollTop: " + document.documentElement.scrollTop);
-                    console.log("window scrollY: " + window.scrollY);
-                }
+                //     console.log("Document scrollTop: " + document.documentElement.scrollTop);
+                //     console.log("window scrollY: " + window.scrollY);
+                // }
 
                 document.getElementById("load-more").addEventListener("click", () => {
                     ui.fetchJokes(8, "#regular-jokes", "Regular Jokes");
 
                 });
-                
+                // ui.addToUI("#regular-jokes", "Test", "Hello world");
+                // ui.addToUI("#regular-jokes", "Test", "Getting started");
+                // ui.addToUI("#regular-jokes", "Test", "Loading cards");
+                // ui.addToUI("#daily-jokes", "Test", "Gathering contents from API");
+                // ui.addToUI("#daily-jokes", "Test", "Displaying contents in the UI");
+                // ui.addToUI("#daily-jokes", "Test", "Rounding up");
+
+
 
             })();
         </script>
