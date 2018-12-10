@@ -165,7 +165,7 @@ UI.prototype.fetchJokes = (numberOfJokes, elem, jokeType) => {
           joke = value.joke;
           console.log(`big joke is ${joke}`);
           ui.addToUI(elem, jokeType, joke);
-          //  return callBack;
+
 
         });
 
@@ -303,6 +303,9 @@ UI.prototype.scrollEvent = function (nav, navBrand, face) {
   document.addEventListener("DOMContentLoaded", () => {
     favChecker('#regular-jokes');
     favChecker('#daily-jokes');
+
+
+    
   });
 
 })();
