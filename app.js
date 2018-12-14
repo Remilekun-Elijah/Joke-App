@@ -26,11 +26,12 @@ if (btn) {
         <i class='fa fa-refresh text-dark ml-5 mt-2 iTag pull-left'
         id="fa-bars"
         title="Reload?"> </i>
-        <i class='fa fa-power-off text-danger mr-5 mt-2 iTag2 pull-right' title="Close Application?"></i>
+        <i class='fa fa-power-off text-danger mr-5 mt-2 iTag2 pull-right off' title="Close Application?" data-target="#myModal" data-toggle="modal"></i>
         `
     } else if (e.target.classList.contains("fa-refresh")) {
-      window.location.reload();
-    } else if (e.target.classList.contains("fa-power-off")) {
+      $("#regular-jokes").html("");
+      ui.fetchJokes(8, "#regular-jokes", "Regular Jokes");
+    } else if (e.target.classList.contains("exit")) {
       window.close();
     }
 
@@ -305,7 +306,7 @@ UI.prototype.scrollEvent = function (nav, navBrand, face) {
     favChecker('#daily-jokes');
 
 
-    
+
   });
 
 })();

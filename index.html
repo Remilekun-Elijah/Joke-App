@@ -79,6 +79,26 @@
 
             <span class='mt-5' id='bars'><i class='fa fa-bars  text-primary rounded-circle bg-white p-3 stay' id="fa-bars"></i></span>
 
+
+            <div class="modal mt-5 fade" id="myModal">
+                <div class="modal-dialog">
+                    <div class="modal-content container">
+                        <div class="modal-header">
+                            <div class="modal-title text-secondary mx-auto">
+                                <h3 class="font-weight-bold">Are you sure ?</h3><br>
+                                <p class="lead">
+                                    You are about to stop laughing... <i class="fa fa-smile"></i>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="modal-body">
+                            <p class="btn btn-outline-secondary fa fa-pull-left" data-dismiss="modal">Not yet</p>
+                            <p class="btn btn-outline-danger exit fa fa-pull-right ">Yes! sure</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
         </div>
         <footer class="containe pt-3 text-center bg-dark" style="overflow-x:hidden">
 
@@ -133,34 +153,28 @@
             ui.fetchJokes(8, "#regular-jokes", "Regular Jokes");
 
             (function () {
-                // window.onscroll = () => {
-                //     console.log("document-Element-ScrollHeight: " + document.documentElement.scrollHeight);
-                //     console.log("window-pageYOffset: " + window.pageYOffset);
-
-                //     console.log("Document scrollTop: " + document.documentElement.scrollTop);
-                //     console.log("window scrollY: " + window.scrollY);
-                // }
 
                 document.getElementById("load-more").addEventListener("click", () => {
                     ui.fetchJokes(8, "#regular-jokes", "Regular Jokes");
 
                 });
-                // ui.addToUI("#regular-jokes", "Test", "Hello world");
-                // ui.addToUI("#regular-jokes", "Test", "Getting started");
-                // ui.addToUI("#regular-jokes", "Test", "Loading cards");
-                // ui.addToUI("#daily-jokes", "Test", "Gathering contents from API");
-                // ui.addToUI("#daily-jokes", "Test", "Displaying contents in the UI");
+
+                // for the number of d favorite jokes to show on d index page, we need this line of code below
                 ui.addToUI("#daily-jokes", "Test", "Rounding up");
-
                 let bs = document.querySelectorAll("b");
-
                 bs.forEach(b => {
                     if (b.textContent === "Test") b.parentElement.parentElement.parentElement.style.display =
                         "none";
 
-                })
+                });
+
 
             })();
+
+            $('#bars .off').on('click', function () {
+                // $('#myModal').fadeIn(5000);
+                console.log('kkkk');
+            });
         </script>
 
 
