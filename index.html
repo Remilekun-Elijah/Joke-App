@@ -13,7 +13,24 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
         <link href='library/font-awesome-4.7.min.css' type="text/css" rel="stylesheet">
-        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="assets/code/css/style.css">
+
+        <!-- register service worker -->
+        <script>
+            if ('serviceWorker' in navigator) {
+                window.addEventListener('load', function () {
+                    navigator.serviceWorker.register('/service-worker.js')
+                        .then(function () {
+                            console.log("Service Worker Registered, Cheers to PWA Fire!");
+                        });
+                });
+            }
+        </script>
+        <!-- end of service worker -->
+
+        <!-- start of web manifest -->
+        <link rel="manifest" href="/manifest.json">
+        <!-- end of web manifest -->
     </head>
 
     <body id="home">
